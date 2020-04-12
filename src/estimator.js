@@ -1,16 +1,26 @@
+const roundNumber = (numb) => Math.floor(numb);
+
 const covid19ImpactEstimator = (data) => {
   const { timeToElapse, reportedCases } = data;
-  const roundNumber = (numb) => Math.floor(numb);
+  // impact estimation
+  const currentlyInfected = (multiples) => reportedCases * multiples;
+  const infectionsByRequestedTime = (multiples) => {
+    return currentlyInfected(multiples) * 2 ** roundNumber(timeToElapse / 3);
+  };
+  const severeCasesByRequestedTime = (multiples) => 0.15 * infectionsByRequestedTime(multiples);
+  // output
   return {
     data,
     estimate: {
       impact: {
-        currentlyInfected: reportedCases * 10,
-        infectionsByRequestedTime: (reportedCases * 10) * 2 ** roundNumber(timeToElapse / 3)
+        currentlyInfected: currentlyInfected(10),
+        infectionsByRequestedTime: infectionsByRequestedTime(10),
+        severeCasesByRequestedTime: severeCasesByRequestedTime(10)
       },
       severeImpact: {
-        currentlyInfected: reportedCases * 50,
-        infectionsByRequestedTime: (reportedCases * 50) * 2 ** roundNumber(timeToElapse / 3)
+        currentlyInfected: currentlyInfected(50),
+        infectionsByRequestedTime: infectionsByRequestedTime(50),
+        severeCasesByRequestedTime: severeCasesByRequestedTime(50)
       }
     }
   };
