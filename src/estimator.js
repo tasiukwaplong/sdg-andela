@@ -37,26 +37,24 @@ const covid19ImpactEstimator = (data) => {
   // output
   return {
     data,
-    estimate: {
-      impact: {
-        currentlyInfected: currentlyInfected(IMPACT_MULTIPLES),
-        infectionsByRequestedTime: infectionsByRequestedTime(IMPACT_MULTIPLES),
-        severeCasesByRequestedTime: severeCasesByRequestedTime(IMPACT_MULTIPLES),
-        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(IMPACT_MULTIPLES),
-        casesForICUByRequestedTime: casesForICUByRequestedTime(IMPACT_MULTIPLES),
-        casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime(IMPACT_MULTIPLES),
-        dollarsInFlight: dollarsInFlight(IMPACT_MULTIPLES)
-      },
-      severeImpact: {
-        currentlyInfected: currentlyInfected(SEVERER_IMPACT_MULTIPLES),
-        infectionsByRequestedTime: infectionsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
-        severeCasesByRequestedTime: severeCasesByRequestedTime(SEVERER_IMPACT_MULTIPLES),
-        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
-        casesForICUByRequestedTime: casesForICUByRequestedTime(SEVERER_IMPACT_MULTIPLES),
-        casesForVentilatorsByRequestedTime:
-          casesForVentilatorsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
-        dollarsInFlight: dollarsInFlight(SEVERER_IMPACT_MULTIPLES)
-      }
+    impact: {
+      currentlyInfected: currentlyInfected(IMPACT_MULTIPLES),
+      infectionsByRequestedTime: infectionsByRequestedTime(IMPACT_MULTIPLES),
+      severeCasesByRequestedTime: severeCasesByRequestedTime(IMPACT_MULTIPLES),
+      hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(IMPACT_MULTIPLES),
+      casesForICUByRequestedTime: casesForICUByRequestedTime(IMPACT_MULTIPLES),
+      casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime(IMPACT_MULTIPLES),
+      dollarsInFlight: dollarsInFlight(IMPACT_MULTIPLES)
+    },
+    severeImpact: {
+      currentlyInfected: currentlyInfected(SEVERER_IMPACT_MULTIPLES),
+      infectionsByRequestedTime: infectionsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+      severeCasesByRequestedTime: severeCasesByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+      hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+      casesForICUByRequestedTime: casesForICUByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+      casesForVentilatorsByRequestedTime:
+        casesForVentilatorsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+      dollarsInFlight: dollarsInFlight(SEVERER_IMPACT_MULTIPLES)
     }
   };
 };
