@@ -2,7 +2,8 @@ const roundNumber = (numb) => {
   const stringNum = numb.toString().split('.')[0];
   return Number(stringNum);
 };
-
+const IMPACT_MULTIPLES = 10;
+const SEVERER_IMPACT_MULTIPLES = 10;
 const nomaliseToDays = (periodType, timeToElapse) => {
   switch (periodType) {
     case 'days':
@@ -22,62 +23,43 @@ const covid19ImpactEstimator = (data) => {
   } = data;
   // impact estimation
   const currentlyInfected = (i) => reportedCases * i;
-  const infectionsByRequestedTime = (i) => {
-    return currentlyInfected(i) * 2 ** roundNumber(timeToElapse / 3);
-  };
+  const infectionsByRequestedTime = (i) => currentlyInfected(i)
+    * 2 ** roundNumber(nomaliseToDays(periodType, timeToElapse) / 3); // infectionsByRequestedTime
   const severeCasesByRequestedTime = (i) => 0.15 * infectionsByRequestedTime(i);
-  const hospitalBedsByRequestedTime = (i) => {
-    return roundNumber(totalHospitalBeds * 0.35 - severeCasesByRequestedTime(i));
-  };
+  const hospitalBedsByRequestedTime = (i) => roundNumber(totalHospitalBeds
+    * 0.35 - severeCasesByRequestedTime(i)); // hospitalBedsByRequestedTime
   const casesForICUByRequestedTime = (i) => 0.05 * infectionsByRequestedTime(i);
-  const casesForVentilatorsByRequestedTime = (i) => {
-    return roundNumber(0.02 * infectionsByRequestedTime(i));
-  };
-  const dollarsInFlight = (i) => {
-    return roundNumber((infectionsByRequestedTime(i) * region.avgDailyIncomeInUSD
-      * region.avgDailyIncomePopulation) / nomaliseToDays(periodType, timeToElapse));
-  };
+  const casesForVentilatorsByRequestedTime = (i) => roundNumber(0.02
+    * infectionsByRequestedTime(i)); // casesForVentilatorsByRequestedTime
+  const dollarsInFlight = (i) => roundNumber((infectionsByRequestedTime(i)
+    * region.avgDailyIncomeInUSD
+    * region.avgDailyIncomePopulation) / nomaliseToDays(periodType, timeToElapse));
   // output
   return {
     data,
     estimate: {
       impact: {
-        currentlyInfected: currentlyInfected(10),
-        infectionsByRequestedTime: infectionsByRequestedTime(10),
-        severeCasesByRequestedTime: severeCasesByRequestedTime(10),
-        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(10),
-        casesForICUByRequestedTime: casesForICUByRequestedTime(10),
-        casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime(10),
-        dollarsInFlight: dollarsInFlight(10)
+        currentlyInfected: currentlyInfected(IMPACT_MULTIPLES),
+        infectionsByRequestedTime: infectionsByRequestedTime(IMPACT_MULTIPLES),
+        severeCasesByRequestedTime: severeCasesByRequestedTime(IMPACT_MULTIPLES),
+        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(IMPACT_MULTIPLES),
+        casesForICUByRequestedTime: casesForICUByRequestedTime(IMPACT_MULTIPLES),
+        casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime(IMPACT_MULTIPLES),
+        dollarsInFlight: dollarsInFlight(IMPACT_MULTIPLES)
       },
       severeImpact: {
-        currentlyInfected: currentlyInfected(50),
-        infectionsByRequestedTime: infectionsByRequestedTime(50),
-        severeCasesByRequestedTime: severeCasesByRequestedTime(50),
-        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(50),
-        casesForICUByRequestedTime: casesForICUByRequestedTime(50),
-        casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime(50),
-        dollarsInFlight: dollarsInFlight(50)
+        currentlyInfected: currentlyInfected(SEVERER_IMPACT_MULTIPLES),
+        infectionsByRequestedTime: infectionsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+        severeCasesByRequestedTime: severeCasesByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+        hospitalBedsByRequestedTime: hospitalBedsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+        casesForICUByRequestedTime: casesForICUByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+        casesForVentilatorsByRequestedTime:
+          casesForVentilatorsByRequestedTime(SEVERER_IMPACT_MULTIPLES),
+        dollarsInFlight: dollarsInFlight(SEVERER_IMPACT_MULTIPLES)
       }
     }
   };
 };
 
-
-// const dummyData = {
-//   region: {
-//     name: 'Africa',
-//     avgAge: 19.7,
-//     avgDailyIncomeInUSD: 4,
-//     avgDailyIncomePopulation: 0.73
-//   },
-//   periodType: 'days',
-//   timeToElapse: 38,
-//   reportedCases: 2747,
-//   population: 92931687,
-//   totalHospitalBeds: 678874
-// };
-
-// console.log(covid19ImpactEstimator(dummyData));
 // export default covid19ImpactEstimator;
 module.exports = covid19ImpactEstimator;
