@@ -1,3 +1,4 @@
+// Code writteb by Tasiu kwpalong
 const roundNumber = (numb) => {
   const stringNum = numb.toString().split('.')[0];
   return Number(stringNum);
