@@ -3,7 +3,7 @@ const roundNumber = (numb) => {
   return Number(stringNum);
 };
 const IMPACT_MULTIPLES = 10;
-const SEVERER_IMPACT_MULTIPLES = 10;
+const SEVERER_IMPACT_MULTIPLES = 50;
 const nomaliseToDays = (periodType, timeToElapse) => {
   switch (periodType) {
     case 'days':
